@@ -40,3 +40,6 @@ def get_cpu_rate():
     data_new = getdata()
     cpu_rate = caculate(data_old, data_new)
     return cpu_rate
+
+if __name__ == "__main__":
+	get_cpu_rate()
