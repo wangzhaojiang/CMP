@@ -29,7 +29,7 @@ def caculate(data_old, data_new):
     co_ttime = reduce(lambda x, y: x + y, data_old)
     cn_ttime = reduce(lambda x, y: x + y, data_new)
     co_used = data_old[0] + data_old[1] + data_old[2] + data_old[4] + data_old[5]
-    cn_uesd = data_new[0] + data_new[1] + data_new[2] + data_new[4]
+    cn_uesd = data_new[0] + data_new[1] + data_new[2] + data_new[4] + data_new[5]
 
     return (cn_uesd - co_used) * 1.0 / (cn_ttime - co_ttime)
 
@@ -38,9 +38,9 @@ def get_cpu_rate():
     data_old = getdata()
     time.sleep(cpu_ti)
     data_new = getdata()
-    cpu_rate = caculate(data_old, data_new)
+    cpu_rate = float("%0.3f" % caculate(data_old, data_new) * 100)
     return cpu_rate
 
 if __name__ == "__main__":
-	result = get_cpu_rate()
+    result = get_cpu_rate()
     print result
