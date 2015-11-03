@@ -38,7 +38,7 @@ def get_cpu_rate():
     data_old = getdata()
     time.sleep(cpu_ti)
     data_new = getdata()
-    cpu_rate = float("%0.3f" % caculate(data_old, data_new) * 100)
+    cpu_rate = float("%0.3f" % (caculate(data_old, data_new) * 100))
     return cpu_rate
 
 if __name__ == "__main__":
