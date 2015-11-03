@@ -1,3 +1,5 @@
 [collecting time interval]
+#cpu间隔时间
 cpu_ti=5
-memory_ti=5
+
+[data time interval]

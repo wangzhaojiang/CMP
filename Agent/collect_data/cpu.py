@@ -13,11 +13,12 @@ cpu_ti = float(cf.get("collecting time interval", "cpu_ti"))
 
 def getdata():
     file_stat = open("/proc/stat", "r")
-    data = ''
+    data = []
     try:
         data = file_stat.readline().split()[1:8]
+        file_stat.close()
         for i in range(7):
-            data[i] = int(data[i])
+            data[i] = float(data[i])
     except Exception, e:
         # todo: LOG
         pass
@@ -31,7 +32,7 @@ def caculate(data_old, data_new):
     co_used = data_old[0] + data_old[1] + data_old[2] + data_old[4] + data_old[5]
     cn_uesd = data_new[0] + data_new[1] + data_new[2] + data_new[4] + data_new[5]
 
-    return (cn_uesd - co_used) * 1.0 / (cn_ttime - co_ttime)
+    return (cn_uesd - co_used) / (cn_ttime - co_ttime)
 
 def get_cpu_rate():
     global cpu_ti
