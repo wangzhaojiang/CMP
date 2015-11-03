@@ -9,7 +9,7 @@ cf = ConfigParser.ConfigParser()
 # cf.read("file_dir")
 # print file_dir
 cf.read("../conf")
-cpu_ti = cf.get("collecting time interval", "cpu_ti")
+cpu_ti = float(cf.get("collecting time interval", "cpu_ti"))
 
 def getdata():
     file_stat = open("/proc/stat", "r")
@@ -31,7 +31,7 @@ def caculate(data_old, data_new):
     co_used = data_old[0] + data_old[1] + data_old[2] + data_old[4] + data_old[5]
     cn_uesd = data_new[0] + data_new[1] + data_new[2] + data_new[4]
 
-    return (cn_uesd - co_used) * 100 / (cn_ttime - co_ttime)
+    return (cn_uesd - co_used) * 1.0 / (cn_ttime - co_ttime)
 
 def get_cpu_rate():
     global cpu_ti
@@ -42,4 +42,5 @@ def get_cpu_rate():
     return cpu_rate
 
 if __name__ == "__main__":
-	get_cpu_rate()
+	result = get_cpu_rate()
+    print result
