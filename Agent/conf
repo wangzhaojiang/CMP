@@ -1,6 +1,6 @@
 [collecting time interval]
 #cpu间隔时间
 cpu_ti=5
-diskio_ti=240
+diskio_ti=5
 
 [data time interval]
