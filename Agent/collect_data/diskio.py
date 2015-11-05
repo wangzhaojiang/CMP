@@ -12,7 +12,7 @@ def getdata():
     data = {}
     with open("/proc/vmstat") as f:
         for line in f:
-            if not line.strip():
+            if line.strip():
                 content = line.split()
                 if content[0] in ["pgpgin", "pgpgout"]:
                     data[content[0]] = float(content[1])
@@ -29,7 +29,7 @@ def get_diskio_rate():
     pgpgin_rate = (data_new["pgpgin"] - data_old["pgpgin"]) / diskio_ti
     pgpgout_rate = (data_new["pgpgout"] - data_old["pgpgout"]) / diskio_ti
 
-    return {"pgpgin": pgpgin_rate, "pgpgout": pgpgout_rate}
+    return {"pgpgin": float("%0.3f" % pgpgin_rate), "pgpgout": float("%0.3f" % pgpgout_rate)}
 
 if __name__ == "__main__":
     result = get_diskio_rate()
