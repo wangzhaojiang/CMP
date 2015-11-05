@@ -11,19 +11,13 @@ cf = ConfigParser.ConfigParser()
 cf.read("../conf")
 cpu_ti = float(cf.get("collecting time interval", "cpu_ti"))
 
+
 def getdata():
-    file_stat = open("/proc/stat", "r")
-    data = []
-    try:
-        data = file_stat.readline().split()[1:8]
-        file_stat.close()
+    with open("/proc/stat", "r") as f:
+        data = f.readline().split()[1:8]
         for i in range(7):
             data[i] = float(data[i])
-    except Exception, e:
-        # todo: LOG
-        pass
-    finally:
-        return data
+    return data
 
 
 def caculate(data_old, data_new):
@@ -33,6 +27,7 @@ def caculate(data_old, data_new):
     cn_uesd = data_new[0] + data_new[1] + data_new[2] + data_new[4] + data_new[5]
 
     return (cn_uesd - co_used) / (cn_ttime - co_ttime)
+
 
 def get_cpu_rate():
     global cpu_ti
