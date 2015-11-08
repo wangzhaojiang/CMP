@@ -26,10 +26,15 @@ def caculate(data_old, data_new):
     global network_ti
     net = {}
     for key in data_old.iterkeys():
-        net[key] = (
-            float("%0.3f" % (float(data_new[key][0]) - float(data_old[key][0]) / network_ti)),
-            float("%0.3f" % (float(data_new[key][8]) - float(data_old[key][8]) / network_ti))
-        )
+       # net[key] = (
+       #     # 此处居然转化不了精度！！！
+       #     round((float(data_new[key][0]) - float(data_old[key][0])) / network_ti, 1),
+       #     round((float(data_new[key][8]) - float(data_old[key][8])) / network_ti, 1)
+       # )
+	rec = round((float(data_new[key][0]) - float(data_old[key][0])) / network_ti, 1)
+	tra = round((float(data_new[key][8]) - float(data_old[key][8])) / network_ti, 1)
+	net[key] = (rec, tra)
+	print rec,tra
 
     return net
 
