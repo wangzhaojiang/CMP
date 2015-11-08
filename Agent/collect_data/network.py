@@ -12,8 +12,8 @@ network_ti = float(cf.get("collecting time interval", "network_ti"))
 def getdata():
     data = {}
     with open("/proc/net/dev", "r") as f:
-        f.read()
-        f.read()
+        f.next()
+        f.next()
         for line in f:
             if line:
                 network_card = line.split(":")[0]
@@ -23,9 +23,13 @@ def getdata():
     return data
 
 def caculate(data_old, data_new):
+    global network_ti
     net = {}
-    for key in data_old.fromkeys():
-        net[key] = [data_new[key][0] - data_old[key][0], data_new[key][8] - data_new[key][8]]
+    for key in data_old.iterkeys():
+        net[key] = [float("%0.3f" % (float(data_new[key][0]) - float(data_old[key][0]) / network_ti), 
+                    float("%0.3f" % (float(data_new[key][8]) - float(data_old[key][8]) / network_ti),]
+
+    return net
 
 
 def get_net_rate():
@@ -35,3 +39,7 @@ def get_net_rate():
     data_new = getdata()
     net = caculate(data_old, data_new)
     return net
+
+if __name__ == "__main__":
+    result = get_net_rate()
+    print result
