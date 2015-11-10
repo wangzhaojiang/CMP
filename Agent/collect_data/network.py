@@ -9,7 +9,7 @@ cf.read("../conf")
 network_ti = float(cf.get("collecting time interval", "network_ti"))
 
 
-def getdata():
+def get_ndata():
     data = {}
     with open("/proc/net/dev", "r") as f:
         f.next()
@@ -23,7 +23,7 @@ def getdata():
     return data
 
 
-def caculate(data_old, data_new):
+def caculate_n(data_old, data_new):
     global network_ti
     net = {}
     for key in data_old.iterkeys():
@@ -42,10 +42,10 @@ def caculate(data_old, data_new):
 
 def get_net_rate():
     global network_ti
-    data_old = getdata()
+    data_old = get_ndata()
     time.sleep(network_ti)
-    data_new = getdata()
-    net = caculate(data_old, data_new)
+    data_new = get_ndata()
+    net = caculate_n(data_old, data_new)
     return net
 
 if __name__ == "__main__":

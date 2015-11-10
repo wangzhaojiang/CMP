@@ -8,7 +8,8 @@ cf = ConfigParser.ConfigParser()
 cf.read("../conf")
 diskio_ti = float(cf.get("collecting time interval", "diskio_ti"))
 
-def getdata():
+
+def get_ddata():
     data = {}
     with open("/proc/vmstat") as f:
         for line in f:
@@ -23,9 +24,9 @@ def getdata():
 
 def get_diskio_rate():
     global diskio_ti
-    data_old = getdata()
+    data_old = get_ddata()
     time.sleep(diskio_ti)
-    data_new = getdata()
+    data_new = get_ddata()
     pgpgin_rate = (data_new["pgpgin"] - data_old["pgpgin"]) / diskio_ti
     pgpgout_rate = (data_new["pgpgout"] - data_old["pgpgout"]) / diskio_ti
 
