@@ -1,3 +1,6 @@
 # coding=utf-8
 # __author__ = 'JakeyWang'
-from collect_data import cpu
+from utils import *
+result = get_cpu_rate()
+print result
+
