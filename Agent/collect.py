@@ -10,22 +10,22 @@ def execmd(cmd):
     global data
     try:
         if cmd == "cpu":
-	    print 'cpu'
+            print 'cpu'
             data[cmd] = get_cpu_rate()
         elif cmd == "memory":
-	    print 'mem'
+            print 'mem'
             data[cmd] = get_mem_rate()
         elif cmd == "diskio":
-	    print 'disk'
+            print 'disk'
             data[cmd] = get_diskio_rate()
         elif cmd == "network":
-	    # todo: 线程无法执行完成！！！
-	    print 'net'
-            re == get_net_rate()
-	    print 'haha'
-
+            # todo: 线程无法执行完成！！！
+            print 'net'
+            print get_net_rate()
+            print 'haha'
     except Exception, e:
         pass
+        print e
         # todo: Log
 
 if __name__ == "__main__":
