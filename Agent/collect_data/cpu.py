@@ -8,7 +8,7 @@ cf = ConfigParser.ConfigParser()
 # file_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/conf"
 # cf.read("file_dir")
 # print file_dir
-cf.read("conf")
+cf.read("../conf")
 cpu_ti = float(cf.get("collecting time interval", "cpu_ti"))
 
 
