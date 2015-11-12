@@ -101,9 +101,7 @@ def caculate_n(data_old, data_new):
         # )
         tra = round((float(data_new[key][8]) - float(data_old[key][8])) / network_ti, 1)
         rec = round((float(data_new[key][0]) - float(data_old[key][0])) / network_ti, 1)
-        print rec, tra
         net[key] = (rec, tra)
-    print net
     return net
 
 

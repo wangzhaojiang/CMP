@@ -1,7 +1,7 @@
 [collecting time interval]
 #cpu间隔时间
-cpu_ti=5
-diskio_ti=5
-network_ti=3
+cpu_ti=2
+diskio_ti=2
+network_ti=2
 
 [data time interval]
