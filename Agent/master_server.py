@@ -1,5 +1,6 @@
 # coding=utf-8
 # __author__ = 'JakeyWang'
+# 主节点收集数据 写入数据库
 import pika
 import json
 

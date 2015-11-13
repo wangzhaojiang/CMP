@@ -4,6 +4,7 @@
 
 import ConfigParser
 import time
+import os
 
 cf = ConfigParser.ConfigParser()
 # file_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/conf"
@@ -112,3 +113,19 @@ def get_net_rate():
     data_new = get_ndata()
     net = caculate_n(data_old, data_new)
     return net
+
+
+def get_host_info():
+    os_info = {}
+    cpu_info = {}
+    hostname = os.popen("hostname").read()
+    os_info['kernel'] = os.popen("uname -r").read()
+    os_info['os'] = os.popen("head -n 1 /etc/issue")
+    memtotal = 0
+    with open("/proc/meminfo") as f:
+        memtotal = int(f.readline().split()[1])
+    cpu_cmd = os.popen("cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c").read().strip().split(' ', 1)
+    cpu_info['core'] = cpu_cmd[0]
+    cpu_info['name'] = cpu_cmd[1]
+
+    return {'cpu': cpu_info, 'memory': memtotal, 'hostname': hostname}

@@ -1,5 +1,6 @@
 # coding=utf-8
 # __author__ = 'JakeyWang'
+# 采集数据 发送数据
 import sys
 import pika
 import json
@@ -18,6 +19,7 @@ def data_tran(message):
                           routing_key='',
                           body=message)
     print " [x] Sent %r" % (message,)
+    # todo: Log
     connection.close()
 
 
@@ -34,6 +36,8 @@ def execmd(cmd):
             result['data'] = get_diskio_rate()
         elif cmd == "network":
             result['data'] = get_net_rate()
+        elif cmd == 'hostinfo':
+            result['data'] = get_host_info()
     except Exception, e:
         pass
         print e
@@ -43,6 +47,10 @@ def execmd(cmd):
 
 
 if __name__ == "__main__":
-    if sys.argv[1]:
+    if sys.argv[1] and sys.argv[1] in ['cpu', 'memory', 'diskio', 'network', 'hostinfo']:
         result = execmd(sys.argv[1])
         data_tran(json.dumps(result))
+    else:
+        # todo: Log error param
+        pass
+
