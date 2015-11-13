@@ -1,6 +1,7 @@
 # coding=utf-8
 # __author__ = 'JakeyWang'
 import pika
+import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -20,6 +21,8 @@ print ' [*] Waiting for logs. To exit press CTRL+C'
 def callback(ch, method, properties, body):
     # todo: 写入mysql并纪录日志
     print " [x] %r" % (body,)
+    data = json.loads(body)
+    print data
 
 channel.basic_consume(callback,
                       queue=queue_name,
