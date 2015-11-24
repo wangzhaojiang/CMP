@@ -1,3 +1,5 @@
+[master]
+ip=127.0.0.1
 [collecting time interval]
 #cpu间隔时间
 cpu_ti=2

@@ -1,0 +1,10 @@
+2015-11-24 22:49:34,721 INFO Collected hostinfo Messages
+2015-11-24 22:49:34,722 INFO Connecting to 127.0.0.1:5672
+2015-11-24 22:49:35,144 INFO Created channel=1
+2015-11-24 22:49:35,146 INFO Collect & Send message to master
+2015-11-24 22:49:35,146 INFO Closing connection (200): Normal shutdown
+2015-11-24 22:49:35,146 INFO Channel.close(200, Normal shutdown)
+2015-11-24 22:49:35,146 INFO Channel.close(200, Normal shutdown)
+2015-11-24 22:49:35,147 INFO Closing connection (200): Normal shutdown
+2015-11-24 22:49:35,147 WARNING Disconnected from RabbitMQ at 127.0.0.1:5672 (200): Normal shutdown
+2015-11-24 22:49:35,147 INFO Connection closed; result=BlockingConnection__OnClosedArgs(connection=<pika.adapters.select_connection.SelectConnection object at 0x10dd65790>, reason_code=200, reason_text='Normal shutdown')
