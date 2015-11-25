@@ -10,6 +10,7 @@ class HostInfo(models.Model):
     cpu = models.CharField(u'Cpu', max_length=1024, blank=False)
     os = models.CharField(u'OS', max_length=1024, blank=False)
     ip = models.CharField(u'IP', max_length=64, blank=True)
+    update_time = models.DateField(u'上一次更新时间')
 
     class Meta:
         verbose_name_plural = u'主机信息'

@@ -4,6 +4,7 @@
 import sys
 import pika
 import json
+import socket
 from log import Logger
 from utils import *
 
@@ -39,6 +40,7 @@ def execmd(cmd):
             result['data'] = get_net_rate()
         elif cmd == 'hostinfo':
             result['data'] = get_host_info()
+        result['hostname'] = socket.gethostname()
         Logger.info('Collected %s Messages' % cmd)
     except Exception, e:
         Logger.error(e)
