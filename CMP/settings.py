@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djcelery',
+    'home_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +52,13 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'CMP.urls'
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR, PROJECT_MODULE_NAME = os.path.split(PROJECT_ROOT)
+
+# mako template dir
+# MAKO_TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
+# MAKO_TEMPLATE_MODULE_DIR = os.path.join(PROJECT_DIR, 'templates_module', APP_CODE)
 
 TEMPLATES = [
     {

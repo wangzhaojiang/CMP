@@ -5,6 +5,7 @@
 import ConfigParser
 import time
 import os
+import socket
 import psutil
 import platform
 
@@ -54,8 +55,9 @@ def get_net_rate():
     net['send_packet'] = sen_new[1] - sen_old[1]
     return net
 
-def get_host_info(): #os hostname cpu memory disk
+def get_host_info(): #os hostname cpu memory disk ip
     host_info = {}
+    host_info['ip'] = socket.gethostbyname(socket.gethostname())
     host_info['memory'] = {'mem_total': float(psutil.virtual_memory().total) / 1024 / 1024, 'mem_used': psutil.virtual_memory().percent}
     host_info['hostname'] = platform.node()
     host_info['os'] = ' '.join(platform.linux_distribution()) + ' ' + ' '.join(platform.architecture())
