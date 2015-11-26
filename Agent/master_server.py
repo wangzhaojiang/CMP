@@ -24,11 +24,10 @@ def write_sql(data):
     cursor = conn.cursor()
     print 'hello'
     if data['type'] == 'hostinfo':
-        sql = "select * from home_app_hostinfo where hostname=`%s`" % data['data']['hostname']
+        sql = "select * from home_app_hostinfo where hostname='%s'" % data['data']['hostname']
         result = cursor.execute(sql)
-        print sql
         if len(cursor.fetchall()) == 0:
-            sql = 'insert into home_app_hostinfo(hostname, os, memory, cpu, ip, disk, update_time values(%s, %s, %s, %s, %s, %s, %s)'
+            sql = "insert into home_app_hostinfo(hostname, os, memory, cpu, ip, disk, update_time) values(%s, %s, %s, %s, %s, %s, %s)"
             param = (
                 data['data']['hostname'],
                 json.dumps(data['data']['os']),
@@ -36,9 +35,22 @@ def write_sql(data):
                 json.dumps(data['data']['cpu']),
                 json.dumps(data['data']['ip']),
                 json.dumps(data['data']['disk']),
-                datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                   )
-        cursor.execute(sql, param)
+            cursor.execute(sql, param)
+        else:
+            sql = "update home_app_hostinfo set os=%s, memory=%s, cpu=%s, disk=%s, ip=%s, update_time=%s where hostname=%s"
+            param = (
+                json.dumps(data['data']['os']),
+                json.dumps(data['data']['memory']),
+                json.dumps(data['data']['cpu']),
+                json.dumps(data['data']['disk']),
+                json.dumps(data['data']['ip']),
+                datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                data['data']['hostname']
+            )
+            cursor.execute(sql, param)
+
     else:
         sql = 'insert into home_app_monitoring_data(data_date, data, type, hostname_id) values(%s, %s, %s, %s)'
         param = (
