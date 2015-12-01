@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 # coding=utf-8
 # __author__ = 'JakeyWang'
 # 采集数据 发送数据

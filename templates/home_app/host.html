@@ -1,0 +1,186 @@
+{% extends "home_app/base.html" %}
+
+{% block main-content %}
+    <div class="row">
+    	<div class="col-lg-12">
+    		<div class="row">
+						<div class="col-md-12 mb " >
+							<!-- WHITE PANEL - TOP USER -->
+							<div class="white-panel pn" style="height: 220px;" >
+								<div class="white-header">
+									<h5>{{ host }}</h5>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4" style="margin-top: 30px;">
+										<p>Cpu_core: {{ cpu_core }}</p>
+										<p>Memory: {{ memory }}</p>
+									</div>
+									<div class="col-md-4">
+										<p><img src="/static/assets/img/computer.jpeg" class="img-circle" width="80"></p>
+										<p>OS: {{ os }}</p>
+									</div>
+									<div class="col-md-4" style="margin-top: 30px;">
+										<p>Ip: {{ ip }}</p>
+										<p>Disk: {{ disk }}</p>
+									</div>
+								</div>
+							</div>
+						</div><!-- /col-md-4 -->
+                </div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-lg-6">
+    		<div id="cpu_chart" style="height: 350px"></div>
+    	</div>
+    	<div class="col-lg-6" style="padding-left: 0px;">
+    		<div id="memory_chart" style="height: 350px" ></div>
+    	</div>
+    	<div class="col-lg-6" style="padding-left: 0px;">
+    		<div id="diskio_chart" style="height: 350px" ></div>
+    	</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	$(function () {
+	var monitor_data
+	$.ajax({
+		url: 'http://127.0.0.1:8000/cmp/ajax_monitoring_init_data/?host={{ host }}',
+		datatype: 'json',
+		method: 'get',
+		async: false,
+		success: function(data){
+			data = JSON.parse(data)
+			debugger
+			if(data['result']){
+				monitor_data = data['data']
+			}
+		}
+	})
+
+	$('#cpu_chart').highcharts('StockChart', {
+
+
+            rangeSelector : {
+                selected : 1,
+                buttons: [{
+	                count: 30,
+	                type: 'minute',
+	                text: '30m'
+	            }, {
+	                count: 60,
+	                type: 'minute',
+	                text: '1 h'
+	            }, {
+	            	count: 1,
+	                type: 'day',
+	                text: '1 d'
+	            }],
+            },
+
+            xAxis: {
+                type: 'datetime',
+                labels: { 
+	                formatter: function() { 
+	                    return  Highcharts.dateFormat('%m-%d %H:%M', this.value); 
+                },
+        		},
+    		},
+
+            title : {
+                text : 'cpu 使用率'
+            },
+            credits: {
+	            enabled: false
+	        },
+            series : [{
+                name : 'cpu',
+                data : monitor_data['cpu'],
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
+        });
+        $('#memory_chart').highcharts('StockChart', {
+
+
+            rangeSelector : {
+                selected : 1,
+                buttons: [{
+	                count: 30,
+	                type: 'minute',
+	                text: '30m'
+	            }, {
+	                count: 60,
+	                type: 'minute',
+	                text: '1 h'
+	            }, {
+	            	count: 1,
+	                type: 'day',
+	                text: '1 d'
+	            }],
+            },
+
+            xAxis: {
+                type: 'datetime',
+                labels: { 
+	                formatter: function() { 
+	                    return  Highcharts.dateFormat('%m-%d %H:%M', this.value); 
+                },
+        		},
+    		},
+
+            title : {
+                text : 'memory 使用率'
+            },
+            credits: {
+	            enabled: false
+	        },
+            series : [{
+                name : 'memory',
+                data : monitor_data['memory'],
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
+        });
+
+        $('#diskio_chart').highcharts('StockChart', {
+
+            rangeSelector: {
+                selected: 4
+            },
+
+            title : {
+                text : '磁盘io情况'
+            },
+
+            credits: {
+	            enabled: false
+	        },
+
+            tooltip: {
+                valueDecimals: 2
+            },
+            series: [
+	            {
+	            	name: 'pgpgin',
+	            	data: monitor_data['diskio']['pgpgin']
+	        	},
+	        	{
+	        		name: 'pgpgout',
+	            	data: monitor_data['diskio']['pgpgout']
+	        	}
+        	]
+        });
+    
+
+
+    
+
+});
+
+{% endblock %}
